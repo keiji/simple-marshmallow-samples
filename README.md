@@ -1,5 +1,5 @@
 # simple-marshmallow-samples
-2015年12月号（11月7日発売）のサンプルアプリです。
+日経Linux 2015年12月号（11月7日発売）のサンプルアプリです。
 
 # License
 
