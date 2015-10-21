@@ -51,6 +51,8 @@ public class FingerprintActivity extends AppCompatActivity {
     private final CancellationSignal mCancellationSignal = new CancellationSignal();
     private final Handler mHandler = new Handler();
 
+    private KeyguardManager mKeyguardManager;
+
     private KeyStore mKeyStore;
 
     // 暗号化されたデータ
@@ -110,6 +112,13 @@ public class FingerprintActivity extends AppCompatActivity {
         mTextView = new TextView(this);
         setContentView(mTextView);
 
+        mKeyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+
+        if (!mKeyguardManager.isKeyguardSecure()) {
+            mTextView.setText("セキュリティロックが設定されていません。設定からセキュリティロックを設定して下さい。\n");
+            return;
+        }
+
         try {
             mKeyStore = KeyStore.getInstance(PROVIDER_NAME);
             mKeyStore.load(null);
@@ -160,8 +169,7 @@ public class FingerprintActivity extends AppCompatActivity {
     }
 
     private void launchDeviceCredential() {
-        KeyguardManager km = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-        Intent intent = km.createConfirmDeviceCredentialIntent("秘密鍵を復号します",
+        Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent("秘密鍵を復号します",
                 "認証の結果は" + AUTH_VALID_DURATION_IN_SECOND + "秒間有効です");
         startActivityForResult(intent, REQUEST_CODE_DEVICE_CREDENTIAL);
     }
