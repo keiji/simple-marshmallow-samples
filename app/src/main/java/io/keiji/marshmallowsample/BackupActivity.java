@@ -21,7 +21,7 @@ import java.util.Date;
 public class BackupActivity extends AppCompatActivity {
     private static final String TAG = BackupActivity.class.getSimpleName();
 
-    private static final String BACKUP_TARGET_FILE_NAME = "file2.dat";
+    private static final String BACKUP_TARGET_FILE_NAME = "file.dat";
 
     private File mFile;
     private TextView mTextView;
